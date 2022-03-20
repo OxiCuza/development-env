@@ -59,4 +59,16 @@ docker-compose up -d
 ```
 10. Finally you can open the web browser and type **localhost** in address bar, and viola ! you have web development environment using docker.
 
+**MAKE MULTIPLE PROJECT INSIDE "src" FOLDER**
+
+*coming soon*
+
+**CREATE NEW DATABASE INSIDE "mysql" FOLDER WITHOUT USING PHPMYADMIN / ADMINER**
+
+*coming soon*
+
+**CONFIGURATION URL FOR MULTIPLE PROJECT DEVELOPMENT**
+
+*coming soon*
+
 ***NOTE :** If you have more question about this repository you can contact me in : oxicusa@gmail.com / oxi@imaginecreative.co.id*
