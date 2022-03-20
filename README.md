@@ -6,6 +6,7 @@
 1. Web server : **nginx:stable-alpine**
 2. Database driver : **mariadb:10.6.4-focal**
 3. PHP version : **php:8.1-fpm**
+4. Node version : *coming soon I will added the package into Dockerfile*
 
 **GETTING STARTED *(USING MAC / LINUX)***
 1. Make sure your local machine have docker engine and docker-compose latest version. If your local machine doesn't installed, you can install first [here !](https://www.docker.com/get-started/)
