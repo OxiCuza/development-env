@@ -1,0 +1,50 @@
+version: '3.8'
+
+networks:
+    laravel:
+        driver: bridge
+
+services:
+    workspace:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: laravel
+        container_name: workspace
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            -   ./src:/var/www/
+        networks:
+            - laravel
+
+    nginx:
+        image: nginx:stable-alpine
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        volumes:
+            - ./src:/var/www
+            - ./nginx:/etc/nginx/conf.d
+        networks:
+            - laravel
+        depends_on:
+            -   workspace
+
+    mariadb:
+        image: mariadb:10.6.4-focal
+        container_name: mariadb
+        restart: unless-stopped
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mariadb
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        networks:
+            - laravel
