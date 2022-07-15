@@ -5,12 +5,25 @@ networks:
         driver: bridge
 
 services:
-    workspace:
+    workspace81:
         build:
             context: ./
-            dockerfile: Dockerfile
-        image: laravel
-        container_name: workspace
+            dockerfile: Dockerfile81
+        image: laravel81
+        container_name: workspace81
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            -   ./src:/var/www/
+        networks:
+            - laravel
+
+    workspace74:
+        build:
+            context: ./
+            dockerfile: Dockerfile74
+        image: laravel74
+        container_name: workspace74
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
@@ -30,7 +43,8 @@ services:
         networks:
             - laravel
         depends_on:
-            -   workspace
+            -   workspace81
+            -   workspace74
 
     mariadb:
         image: mariadb:10.6.4-focal
