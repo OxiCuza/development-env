@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 networks:
     laravel:
@@ -62,3 +62,15 @@ services:
             - ./mysql:/var/lib/mysql
         networks:
             - laravel
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+            - 8001:80
+        environment:
+            - PMA_ARBITRARY=1
+            - PMA_HOST=mariadb
+        networks:
+            - laravel
+        depends_on:
+            - mariadb
