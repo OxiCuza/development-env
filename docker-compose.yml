@@ -40,6 +40,8 @@ services:
         volumes:
             - ./src:/var/www
             - ./nginx:/etc/nginx/conf.d
+            # - ./nginx/ssl/imgn-sidita.id.crt:/etc/nginx/imgn-sidita.id.crt
+            # - ./nginx/ssl/imgn-sidita.id.key:/etc/nginx/imgn-sidita.id.key
         networks:
             - local_network
         depends_on:
@@ -76,30 +78,52 @@ services:
         depends_on:
             - mariadb
 
-    # postgres:
-    #     image: postgres:14.5-alpine
-    #     container_name: postgres
-    #     restart: unless-stopped
-    #     environment:
-    #         POSTGRES_PASSWORD: ${DB_PASSWORD}
-    #         POSTGRES_USER: ${DB_USERNAME}
-    #         PGDATA: /var/lib/postgresql/data/pgdata
-    #     ports:
-    #         - "5432:5432"
-    #     volumes:
-    #         - ./postgres:/var/lib/postgresql/data
-    #     networks:
-    #         - local_network
+    postgres:
+        image: postgres
+        container_name: postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_USER: ${DB_USERNAME}
+            PGDATA: /var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+            - ./data/backup:/backup
+        networks:
+            - local_network
 
-    # pgadmin:
-    #     container_name: pgadmin_container
-    #     image: dpage/pgadmin4
-    #     environment:
-    #         PGADMIN_DEFAULT_EMAIL: oxicusa@gmail.com
-    #         PGADMIN_DEFAULT_PASSWORD: root
-    #     ports:
-    #         - 8002:80
-    #     networks:
-    #         - local_network
-    #     depends_on:
-    #         - postgres
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: oxicusa@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: root
+        ports:
+            - 8002:80
+        volumes:
+            - ./pgadmin-data:/var/lib/pgadmin
+            - ./data/sidita:/sidita
+        networks:
+            - local_network
+        depends_on:
+            - postgres
+
+    mongodb:
+        image: mongo
+        restart: always
+        ports:
+            - 27017:27017
+        volumes:
+            - ./mongodb:/data/db
+
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+            - 8003:8081
+        environment:
+            ME_CONFIG_MONGODB_SERVER: mongodb
+        depends_on:
+            - mongodb
