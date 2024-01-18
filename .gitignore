@@ -1,6 +1,2 @@
-/.idea
-/template
-/src
-/mysql
-/laradock
-/nginx/*
+src/*
+mariadb/data/*

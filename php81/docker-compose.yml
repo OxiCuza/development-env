@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+    php81:
+        build: .
+        image: php81
+        container_name: php81
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - absolute-path-src:/var/www/
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    absolute-path-src:
+        driver: local
+        driver_opts:
+            o: bind
+            type: none
+            device: /home/oxicuza/Productions/docker/src
