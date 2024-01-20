@@ -28,7 +28,7 @@ RUN docker-php-ext-enable imagick
 
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip pgsql pdo pdo_pgsql
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip pgsql pdo pdo_pgsql mysqli
 
 # Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root -u $uid -d /home/$user $user

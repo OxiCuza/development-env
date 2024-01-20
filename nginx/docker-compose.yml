@@ -8,25 +8,11 @@ services:
         ports:
             - "80:80"
         volumes:
-            - absolute-path-src:/var/www
-            - absolute-path-conf:/etc/nginx/conf.d
+            - /home/oxicuza/Productions/docker/src:/var/www
+            - /home/oxicuza/Productions/docker/nginx/conf:/etc/nginx/conf.d
         networks:
             - app-network
 
 networks:
     app-network:
         driver: bridge
-
-volumes:
-    absolute-path-src:
-        driver: local
-        driver_opts:
-            o: bind
-            type: none
-            device: /home/oxicuza/Productions/docker/src
-    absolute-path-conf:
-        driver: local
-        driver_opts:
-            o: bind
-            type: none
-            device: /home/oxicuza/Productions/docker/nginx/conf

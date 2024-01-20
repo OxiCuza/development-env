@@ -6,27 +6,16 @@ services:
         container_name: mariadb
         restart: unless-stopped
         environment:
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
-            SERVICE_TAGS: dev
-            SERVICE_NAME: mariadb
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+            MYSQL_USER: root
         ports:
             - "3306:3306"
         volumes:
-            - absolute-path-mariadb:/var/lib/mysql
-        user: mysql
+            - /home/oxicuza/Productions/docker/mariadb/data:/var/lib/mysql:rw
         networks:
             - app-network
 
 networks:
     app-network:
         driver: bridge
-
-volumes:
-    absolute-path-mariadb:
-        driver: local
-        driver_opts:
-            o: bind
-            type: none
-            device: /home/oxicuza/Productions/docker/mariadb/data
